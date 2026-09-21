@@ -1,0 +1,16 @@
+python-dotenv
+pydantic
+pydantic-settings
+requests
+pymupdf
+sqlalchemy
+sentence-transformers
+chromadb
+langchain-core
+langchain-ollama
+rank-bm25
+langgraph
+playwright
+streamlit==1.51.0
+fastapi
+uvicorn[standard]

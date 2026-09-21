@@ -1,0 +1,14 @@
+[
+  {
+    "id": "n1",
+    "question": "What is the latest news about CULT.FIT?",
+    "expected_company": "CULT.FIT LIMITED",
+    "expected_article_count": 0
+  },
+  {
+    "id": "n2",
+    "question": "What is the latest news about CULT.FIT and how has its financial performance changed?",
+    "expected_company": "CULT.FIT LIMITED",
+    "expected_article_count": 0
+  }
+]

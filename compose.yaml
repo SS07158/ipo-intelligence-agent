@@ -1,0 +1,52 @@
+services:
+  api:
+    build: .
+
+    container_name: ipo-intelligence-api
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+
+    volumes:
+      - ./data:/app/data
+      - ./ipo_intelligence.db:/app/ipo_intelligence.db
+      - huggingface-cache:/root/.cache/huggingface
+
+    restart: unless-stopped
+
+  frontend:
+    build: .
+
+    container_name: ipo-intelligence-frontend
+
+    ports:
+      - "8501:8501"
+
+    environment:
+      API_URL: http://api:8000
+      PYTHONPATH: /app
+
+    depends_on:
+      - api
+
+    command:
+      [
+        "streamlit",
+        "run",
+        "app/frontend/streamlit_app.py",
+        "--server.address=0.0.0.0",
+        "--server.port=8501"
+      ]
+
+    restart: unless-stopped
+
+    
+
+volumes:
+  huggingface-cache:

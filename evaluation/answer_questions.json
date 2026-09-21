@@ -1,0 +1,73 @@
+[
+  {
+    "id": "a1",
+    "question": "What was revenue from operations in FY2024?",
+    "gold_answer": "9266.62",
+    "unit": "INR million",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "OUR STRENGTHS",
+      "RESULTS OF OPERATIONS"
+    ]
+  },
+  {
+    "id": "a2",
+    "question": "What was revenue from operations in FY2026?",
+    "gold_answer": "17206.06",
+    "unit": "INR million",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "OUR STRENGTHS",
+      "RESULTS OF OPERATIONS"
+    ]
+  },
+  {
+    "id": "a3",
+    "question": "What was the proposed fresh issue size?",
+    "gold_answer": "950",
+    "unit": "INR crore",
+    "expected_sections": [
+      "OBJECTS OF THE OFFER",
+      "THE OFFER"
+    ]
+  },
+  {
+  "id": "a4",
+  "question": "What are the major internal risks mentioned in the DRHP?",
+  "gold_answer": null,
+  "unit": null,
+  "expected_answer_points": [
+    "insurance coverage",
+    "third-party payment systems",
+    "expansion and operational risks",
+    "vendor",
+    "supply chain"
+  ],
+  "expected_sections": [
+    "INTERNAL RISKS"
+  ]
+},
+  {
+  "id": "a5",
+  "question": "What industry does CULT.FIT operate in?",
+  "gold_answer": null,
+  "unit": null,
+  "expected_answer_points": [
+    "fitness",
+    "active lifestyle",
+    "fitness services",
+    "fitness products"
+  ],
+  "expected_sections": [
+    "INDUSTRY OVERVIEW"
+  ]
+},
+  
+  {
+    "id": "a6",
+    "question": "What is the latest news about CULT.FIT?",
+    "gold_answer": null,
+    "unit": null,
+    "expected_sections": []
+  }
+]

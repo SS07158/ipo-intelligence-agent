@@ -1,0 +1,34 @@
+[
+  {
+    "id": "g1",
+    "question": "What was revenue from operations in FY2024?",
+    "expected_answer_contains": [
+      "9266.62"
+    ]
+  },
+  {
+    "id": "g2",
+    "question": "What was revenue from operations in FY2026?",
+    "expected_answer_contains": [
+      "17206.06"
+    ]
+  },
+  {
+    "id": "g3",
+    "question": "What was the proposed fresh issue size?",
+    "expected_answer_contains": [
+      "950",
+      "9500"
+    ]
+  },
+  {
+    "id": "g4",
+    "question": "What are the major internal risks?",
+    "expected_answer_contains": []
+  },
+  {
+    "id": "g5",
+    "question": "What industry does CULT.FIT operate in?",
+    "expected_answer_contains": []
+  }
+]

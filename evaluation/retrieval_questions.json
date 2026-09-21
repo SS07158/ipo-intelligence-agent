@@ -1,0 +1,270 @@
+[
+  {
+    "id": "q1",
+    "category": "risks",
+    "question": "What are the major risks mentioned in the DRHP?",
+    "expected_sections": [
+      "INTERNAL RISKS",
+      "EXTERNAL RISKS",
+      "RISKS RELATED TO THIS OFFER"
+    ]
+  },
+  {
+    "id": "q2",
+    "category": "business",
+    "question": "What is the company's business model?",
+    "expected_sections": [
+      "THE ECOSYSTEM-LED MODEL : COMPETITIVE ADVANTAGE THROUGH INTEGRATION",
+      "OVERVIEW"
+    ]
+  },
+  {
+    "id": "q3",
+    "category": "ipo",
+    "question": "How does the company plan to use the IPO proceeds?",
+    "expected_sections": [
+      "OBJECTS OF THE OFFER"
+    ]
+  },
+  {
+    "id": "q4",
+    "category": "business",
+    "question": "What are the company's key competitive strengths?",
+    "expected_sections": [
+      "OUR STRENGTHS",
+      "THE ECOSYSTEM-LED MODEL : COMPETITIVE ADVANTAGE THROUGH INTEGRATION"
+    ]
+  },
+  {
+    "id": "q5",
+    "category": "risks",
+    "question": "What are the risks related to the company's operations?",
+    "expected_sections": [
+      "INTERNAL RISKS",
+      "EXTERNAL RISKS"
+    ]
+  },
+  {
+    "id": "q6",
+    "category": "industry",
+    "question": "What industry does the company operate in?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q7",
+    "category": "financial",
+    "question": "What financial information is disclosed about the company?",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "SUMMARY OF FINANCIAL INFORMATION",
+      "RESTATED CONSOLIDATED FINANCIAL INFORMATION"
+    ]
+  },
+  {
+    "id": "q8",
+    "category": "risks",
+    "question": "What factors could negatively affect the company's business?",
+    "expected_sections": [
+      "INTERNAL RISKS",
+      "EXTERNAL RISKS",
+      "RISKS RELATED TO THIS OFFER"
+    ]
+  },
+  {
+    "id": "q9",
+    "category": "business",
+    "question": "What does the company say about its growth strategy?",
+    "expected_sections": [
+      "OUR STRATEGIES"
+    ]
+  },
+  {
+    "id": "q10",
+    "category": "industry",
+    "question": "What are the key factors affecting the company's industry?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q11",
+    "category": "business",
+    "question": "What are the company's main operations?",
+    "expected_sections": [
+      "OUR OPERATIONS"
+    ]
+  },
+  {
+    "id": "q12",
+    "category": "business",
+    "question": "What fitness products does the company offer?",
+    "expected_sections": [
+      "FITNESS PRODUCTS"
+    ]
+  },
+  {
+    "id": "q13",
+    "category": "business",
+    "question": "How does the company compete in the market?",
+    "expected_sections": [
+      "COMPETITION",
+      "OUR STRENGTHS",
+      "THE ECOSYSTEM-LED MODEL : COMPETITIVE ADVANTAGE THROUGH INTEGRATION"
+    ]
+  },
+  {
+    "id": "q14",
+    "category": "business",
+    "question": "What are the company's principal competitive advantages?",
+    "expected_sections": [
+      "OUR STRENGTHS",
+      "THE ECOSYSTEM-LED MODEL : COMPETITIVE ADVANTAGE THROUGH INTEGRATION"
+    ]
+  },
+  {
+    "id": "q15",
+    "category": "business",
+    "question": "What technology capabilities support the company's operations?",
+    "expected_sections": [
+      "OUR STRENGTHS",
+      "OUR OPERATIONS",
+      "THE ECOSYSTEM-LED MODEL : COMPETITIVE ADVANTAGE THROUGH INTEGRATION"
+    ]
+  },
+  {
+    "id": "q16",
+    "category": "industry",
+    "question": "What does the DRHP say about India's fitness and active lifestyle market?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q17",
+    "category": "industry",
+    "question": "What growth opportunities are described in the industry?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q18",
+    "category": "industry",
+    "question": "What market trends are discussed in the industry overview?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q19",
+    "category": "industry",
+    "question": "What are the key characteristics of the Indian fitness market?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q20",
+    "category": "industry",
+    "question": "What factors are expected to support growth in the fitness market?",
+    "expected_sections": [
+      "INDUSTRY OVERVIEW"
+    ]
+  },
+  {
+    "id": "q21",
+    "category": "financial",
+    "question": "What was the company's revenue from operations in the reported financial years?",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "RESULTS OF OPERATIONS",
+      "OUR STRENGTHS",
+      "SUMMARY OF FINANCIAL INFORMATION"
+    ]
+  },
+  {
+    "id": "q22",
+    "category": "financial",
+    "question": "What financial performance trends are highlighted in the DRHP?",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "OUR STRENGTHS",
+      "RESULTS OF OPERATIONS"
+    ]
+  },
+  {
+    "id": "q23",
+    "category": "financial",
+    "question": "What does the DRHP say about the company's profitability?",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "RESULTS OF OPERATIONS"
+    ]
+  },
+  {
+    "id": "q24",
+    "category": "financial",
+    "question": "What factors affected the company's results of operations?",
+    "expected_sections": [
+      "SIGNIFICANT FACTORS AFFECTING OUR RESULTS OF OPERATIONS",
+      "RESULTS OF OPERATIONS"
+    ]
+  },
+  {
+    "id": "q25",
+    "category": "financial",
+    "question": "What accounting policies are discussed in the DRHP?",
+    "expected_sections": [
+      "MATERIAL ACCOUNTING POLICIES"
+    ]
+  },
+  {
+    "id": "q26",
+    "category": "ipo",
+    "question": "What is the purpose of the proposed offer?",
+    "expected_sections": [
+      "OBJECTS OF THE OFFER"
+    ]
+  },
+  {
+    "id": "q27",
+    "category": "ipo",
+    "question": "What information is provided about the offer?",
+    "expected_sections": [
+      "THE OFFER",
+      "OBJECTS OF THE OFFER",
+      "TERMS OF THE OFFER"
+    ]
+  },
+  {
+    "id": "q28",
+    "category": "risks",
+    "question": "What risks are associated with the company's fitness products?",
+    "expected_sections": [
+      "INTERNAL RISKS",
+      "FITNESS PRODUCTS"
+    ]
+  },
+  {
+    "id": "q29",
+    "category": "financial",
+    "question": "What financial information is available for the subsidiaries and group companies?",
+    "expected_sections": [
+      "FINANCIAL INFORMATION",
+      "SECTION VII: OUR GROUP COMPANIES",
+      "RESTATED CONSOLIDATED FINANCIAL INFORMATION"
+    ]
+  },
+  {
+    "id": "q30",
+    "category": "business",
+    "question": "How do the company's operations and technology support customer experience?",
+    "expected_sections": [
+      "OUR OPERATIONS",
+      "OUR STRENGTHS",
+      "THE ECOSYSTEM-LED MODEL : COMPETITIVE ADVANTAGE THROUGH INTEGRATION"
+    ]
+  }
+]

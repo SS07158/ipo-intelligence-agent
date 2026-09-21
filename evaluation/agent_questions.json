@@ -1,0 +1,79 @@
+[
+  {
+    "id": "a1",
+    "question": "What is the fresh issue size of CULT.FIT?",
+    "expected_tools": [
+      "lookup_ipo_tool"
+    ]
+  },
+  {
+    "id": "a2",
+    "question": "What was revenue from operations in FY2026?",
+    "expected_tools": [
+      "lookup_financials_tool"
+    ]
+  },
+  {
+    "id": "a3",
+    "question": "What are the major internal risks?",
+    "expected_tools": [
+      "search_ipo_documents_tool"
+    ]
+  },
+  {
+    "id": "a4",
+    "question": "How has CULT.FIT's revenue changed?",
+    "expected_tools": [
+      "analyze_revenue_growth_tool"
+    ]
+  },
+  {
+    "id": "a5",
+    "question": "How has CULT.FIT's revenue changed, and what risks could affect that growth?",
+    "expected_tools": [
+      "analyze_revenue_growth_tool",
+      "search_ipo_documents_tool"
+    ]
+  },
+  {
+    "id": "a6",
+    "question": "What industry does CULT.FIT operate in?",
+    "expected_tools": [
+      "search_ipo_documents_tool"
+    ]
+  },
+  {
+    "id": "a7",
+    "question": "What is the lot size of the IPO?",
+    "expected_tools": [
+      "lookup_ipo_tool"
+    ]
+  },
+
+  {
+    "id": "a8",
+    "question": "What is the latest news about CULT.FIT?",
+    "expected_tools": [
+      "lookup_news_tool"
+    ]
+  },
+
+  {
+    "id": "a9",
+    "question": "What is the latest news about CULT.FIT and how has its financial performance changed?",
+    "expected_tools": [
+      "lookup_news_tool",
+      "analyze_financial_performance_tool"
+    ]
+  },
+  
+  {
+    "id": "a10",
+    "question": "What is the latest news about CULT.FIT and what are its major internal risks?",
+    "expected_tools": [
+      "lookup_news_tool",
+      "search_ipo_documents_tool"
+    ]
+  }
+
+]

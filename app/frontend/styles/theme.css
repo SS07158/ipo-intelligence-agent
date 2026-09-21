@@ -1,0 +1,620 @@
+.brand {
+    padding: 0.5rem 0 1rem 0;
+}
+
+.brand-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.brand-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.65;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.65;
+    margin-top: 0.25rem;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #22c55e;
+}
+
+.status-muted {
+    font-size: 0.75rem;
+    opacity: 0.55;
+    margin-top: 0.3rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 5rem 1rem;
+    opacity: 0.8;
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.empty-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.empty-text {
+    margin-top: 0.4rem;
+    opacity: 0.65;
+}
+
+div[data-testid="stMetric"] {
+    padding: 0.8rem;
+}
+
+/* ==================================================
+   IPO HERO
+   ================================================== */
+
+.hero-card {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 34px 38px;
+    margin: 8px 0 28px 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    background: linear-gradient(
+        135deg,
+        #171a22 0%,
+        #11141b 100%
+    );
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+}
+
+.hero-eyebrow {
+    margin-bottom: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8b93a7;
+}
+
+.hero-title {
+    margin-bottom: 10px;
+    font-size: 2.15rem;
+    line-height: 1.15;
+    font-weight: 750;
+    color: #f5f7fb;
+}
+
+.hero-subtitle {
+    max-width: 760px;
+    margin-bottom: 22px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #aeb5c4;
+}
+
+.hero-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #cbd1dc;
+}
+
+.chip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #27c281;
+    flex-shrink: 0;
+}
+
+
+/* ==================================================
+   SECTION HEADING
+   ================================================== */
+
+.section-heading {
+    margin: 4px 0 18px 0;
+}
+
+.section-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #f1f3f7;
+}
+
+.section-subtitle {
+    margin-top: 4px;
+    font-size: 0.88rem;
+    color: #858d9e;
+}
+
+/* ==================================================
+   SIDEBAR
+   ================================================== */
+
+section[data-testid="stSidebar"] {
+    background: #15171e;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+section[data-testid="stSidebar"] > div {
+    padding: 28px 22px 24px 22px;
+}
+
+
+/* --------------------------------------------------
+   Brand
+   -------------------------------------------------- */
+
+.brand {
+    padding: 4px 0 8px 0;
+}
+
+.brand-title {
+    font-size: 1.45rem;
+    font-weight: 750;
+    line-height: 1.2;
+    color: #f3f5f8;
+}
+
+.brand-subtitle {
+    margin-top: 6px;
+    font-size: 0.82rem;
+    color: #858c9c;
+}
+
+
+/* --------------------------------------------------
+   Sidebar headings
+   -------------------------------------------------- */
+
+section[data-testid="stSidebar"] h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9ba3b4;
+}
+
+
+/* --------------------------------------------------
+   Company selector
+   -------------------------------------------------- */
+
+section[data-testid="stSidebar"]
+div[data-baseweb="select"] > div {
+    min-height: 44px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0f1117;
+    box-shadow: none;
+}
+
+section[data-testid="stSidebar"]
+div[data-baseweb="select"] > div:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+
+/* --------------------------------------------------
+   Quick research buttons
+   -------------------------------------------------- */
+
+section[data-testid="stSidebar"] .stButton > button {
+    min-height: 42px;
+    margin-bottom: 8px;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    background: #1d2028;
+    color: #dfe3ea;
+    font-size: 0.84rem;
+    font-weight: 600;
+    box-shadow: none;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background: #242832;
+    border-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+}
+
+section[data-testid="stSidebar"] .stButton > button:active {
+    transform: translateY(0);
+}
+
+
+/* --------------------------------------------------
+   Sidebar divider
+   -------------------------------------------------- */
+
+section[data-testid="stSidebar"] hr {
+    margin: 24px 0;
+    border-color: rgba(255, 255, 255, 0.07);
+}
+
+
+/* --------------------------------------------------
+   System status
+   -------------------------------------------------- */
+
+.status-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: #dce1e8;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #27c281;
+    flex-shrink: 0;
+}
+
+.status-muted {
+    margin-top: 7px;
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: #737b8b;
+}
+
+/* ==================================================
+   MAIN CHAT AREA
+   ================================================== */
+
+.section-heading {
+    margin-bottom: 22px;
+}
+
+
+/* --------------------------------------------------
+   Empty state
+   -------------------------------------------------- */
+
+.empty-state {
+    max-width: 620px;
+    margin: 70px auto 55px auto;
+    padding: 38px 34px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.empty-icon {
+    margin-bottom: 14px;
+    font-size: 2rem;
+}
+
+.empty-title {
+    margin-bottom: 8px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #eef1f5;
+}
+
+.empty-text {
+    max-width: 460px;
+    margin: 0 auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #838b9b;
+}
+
+
+/* --------------------------------------------------
+   Chat messages
+   -------------------------------------------------- */
+
+[data-testid="stChatMessage"] {
+    margin-bottom: 16px;
+}
+
+[data-testid="stChatMessage"] > div {
+    max-width: 900px;
+}
+
+[data-testid="stChatMessageContent"] {
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    background: #171a21;
+}
+
+
+/* --------------------------------------------------
+   Chat text
+   -------------------------------------------------- */
+
+[data-testid="stChatMessageContent"] p {
+    line-height: 1.7;
+}
+
+[data-testid="stChatMessageContent"] strong {
+    color: #f3f5f8;
+}
+
+
+/* --------------------------------------------------
+   Sources expander
+   -------------------------------------------------- */
+
+[data-testid="stChatMessageContent"] details {
+    margin-top: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+[data-testid="stChatMessageContent"] details summary {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #aeb6c5;
+}
+
+[data-testid="stChatMessageContent"] a {
+    color: #8eaafc;
+    text-decoration: none;
+}
+
+[data-testid="stChatMessageContent"] a:hover {
+    text-decoration: underline;
+}
+
+
+/* --------------------------------------------------
+   Chat input
+   -------------------------------------------------- */
+
+[data-testid="stChatInput"] {
+    padding-top: 12px;
+}
+
+[data-testid="stChatInput"] > div {
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #15181f;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+[data-testid="stChatInput"] textarea {
+    color: #eef1f5;
+}
+
+[data-testid="stChatInput"] textarea::placeholder {
+    color: #737b8c;
+}
+
+
+/* --------------------------------------------------
+   Main page spacing
+   -------------------------------------------------- */
+
+.block-container {
+    padding-top: 2.5rem;
+    padding-bottom: 7rem;
+}
+
+/* ==================================================
+   FINAL UI POLISH
+   ================================================== */
+
+/* --------------------------------------------------
+   Remove Streamlit chrome
+   -------------------------------------------------- */
+
+footer {
+    visibility: hidden;
+}
+
+[data-testid="stStatusWidget"] {
+    visibility: hidden;
+}
+
+[data-testid="stToolbar"] {
+    /* visibility: hidden; */
+}
+
+/* /* --------------------------------------------------
+   Sidebar toggle
+   -------------------------------------------------- */
+
+/* [data-testid="stSidebarCollapseButton"],
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapsedControl"] {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}  */
+
+/* --------------------------------------------------
+   Main typography
+   -------------------------------------------------- */
+
+html,
+body,
+[class*="css"] {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+p,
+li {
+    color: #c5cad4;
+}
+
+
+/* --------------------------------------------------
+   Assistant answer
+   -------------------------------------------------- */
+
+[data-testid="stChatMessage"] {
+    background: transparent;
+}
+
+[data-testid="stChatMessageContent"] {
+    font-size: 0.94rem;
+}
+
+[data-testid="stChatMessageContent"] h1,
+[data-testid="stChatMessageContent"] h2,
+[data-testid="stChatMessageContent"] h3 {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    color: #f1f3f7;
+}
+
+[data-testid="stChatMessageContent"] ul,
+[data-testid="stChatMessageContent"] ol {
+    padding-left: 22px;
+}
+
+[data-testid="stChatMessageContent"] li {
+    margin-bottom: 6px;
+}
+
+
+/* --------------------------------------------------
+   Tables
+   -------------------------------------------------- */
+
+[data-testid="stChatMessageContent"] table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.86rem;
+}
+
+[data-testid="stChatMessageContent"] th {
+    padding: 10px 12px;
+    text-align: left;
+    background: #1d2028;
+    color: #e5e8ee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-testid="stChatMessageContent"] td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+
+/* --------------------------------------------------
+   Code blocks
+   -------------------------------------------------- */
+
+[data-testid="stChatMessageContent"] pre {
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    background: #0d0f14;
+}
+
+[data-testid="stChatMessageContent"] code {
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+/* --------------------------------------------------
+   Links
+   -------------------------------------------------- */
+
+[data-testid="stChatMessageContent"] a {
+    font-weight: 600;
+}
+
+
+/* --------------------------------------------------
+   Source entries
+   -------------------------------------------------- */
+
+[data-testid="stExpander"] {
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.018);
+}
+
+[data-testid="stExpander"] p {
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+[data-testid="stExpander"] hr {
+    margin: 12px 0;
+}
+
+
+/* --------------------------------------------------
+   Scrollbar
+   -------------------------------------------------- */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #30343d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #414752;
+}
