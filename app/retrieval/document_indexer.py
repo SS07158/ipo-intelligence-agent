@@ -58,16 +58,14 @@ class DocumentIndexer:
             pages
         )
 
-        if config is not None:
-            raise ValueError(
-                "Document configuration is required"
-                "for IPO-aware indexing"
-            )
         
-        enriched_chunks = add_metadata(
-            chunks,
-            config,
-        )
+        if config is not None:
+            enriched_chunks = add_metadata(
+                chunks,
+                config,
+            )
+        else:
+            enriched_chunks = chunks
 
         if config is not None:
 
@@ -109,7 +107,7 @@ class DocumentIndexer:
 
         ids = [
             (
-                f"{chunk['document_id']}"
+                f"{chunk.get('document_id', 'document')}"
                 f"-chunk-{chunk['chunk_index']}"
             )
             for chunk in enriched_chunks
@@ -120,21 +118,11 @@ class DocumentIndexer:
         for chunk in enriched_chunks:
 
             metadata = {
-                "document_id": chunk[
-                    "document_id"
-                ],
-                "ipo_id": chunk[
-                    "ipo_id"
-                ],
-                "company": chunk[
-                    "company"
-                ],
-                "document_type": chunk[
-                    "document_type"
-                ],
-                "source": chunk[
-                    "source"
-                ],
+                "document_id": chunk.get("document_id", ""),
+                "ipo_id": chunk.get("ipo_id", ""),
+                "company": chunk.get("company", ""),
+                "document_type": chunk.get("document_type", ""),
+                "source": chunk.get("source", ""),
                 "page_number": chunk[
                     "page_number"
                 ],
