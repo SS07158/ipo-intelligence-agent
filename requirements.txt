@@ -8,6 +8,7 @@ sentence-transformers
 chromadb
 langchain-core
 langchain-ollama
+langchain-google-genai==4.4.0
 rank-bm25
 langgraph
 playwright
