@@ -2,6 +2,7 @@ from pathlib import Path
 
 import chromadb
 
+from app.config import settings
 
 class VectorStore:
     """
@@ -11,8 +12,13 @@ class VectorStore:
     def __init__(
         self,
         persist_directory: str | Path = "data/chroma",
-        collection_name: str = "ipo_documents",
+        collection_name: str | None = None,
     ):
+
+        collection_name = (
+            collection_name or settings.chroma_collection_name
+        )
+        
         self.client = chromadb.PersistentClient(
             path=str(persist_directory)
         )

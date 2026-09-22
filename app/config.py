@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     processed_data_dir: Path = BASE_DIR / "data" / "processed"
     metadata_dir: Path = BASE_DIR / "data" / "metadata"
     chroma_dir: Path = BASE_DIR / "data" / "chroma"
+    chroma_collection_name: str = "ipo_documents"
 
     database_url: str = "sqlite:///ipo_intelligence.db"
 
