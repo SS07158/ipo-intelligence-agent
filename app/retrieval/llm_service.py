@@ -57,4 +57,4 @@ class LLMService:
 
         response = self.llm.invoke(messages)
 
-        return response.content
+        return response.text
