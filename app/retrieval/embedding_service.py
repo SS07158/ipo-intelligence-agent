@@ -9,6 +9,7 @@ BGE_MODEL_NAME = "BAAI/bge-m3"
 
 GEMINI_EMBEDDING_MODEL = "gemini-embedding-2"
 GEMINI_OUTPUT_DIMENSIONS = 1024
+GEMINI_BATCH_SIZE = 32
 
 
 
@@ -71,18 +72,40 @@ class EmbeddingService:
 
         embeddings: list[list[float]] = []
 
-        for text in texts:
-            document_text = f"title: none | text: {text}"
+        for start in range(0, len(texts), GEMINI_BATCH_SIZE):
+            batch = texts[
+                start:start + GEMINI_BATCH_SIZE
+            ]
+
+            contents = [
+                types.Content(
+                    parts=[
+                        types.Part(
+                            text=f"title: none | text: {text}"
+                        )
+                    ]
+                )
+                for text in batch
+            ]
 
             result = self.client.models.embed_content(
                 model=GEMINI_EMBEDDING_MODEL,
-                contents=document_text,
+                contents=contents,
                 config=types.EmbedContentConfig(
                     output_dimensionality=GEMINI_OUTPUT_DIMENSIONS,
                 ),
             )
 
-            embeddings.append(result.embeddings[0].values)
+            if len(result.embeddings) != len(batch):
+                raise RuntimeError(
+                    "Gemini returned an unexpected number "
+                    "of embeddings."
+                )
+
+            embeddings.extend(
+                embedding.values
+                for embedding in result.embeddings
+            )
 
         return embeddings
 
