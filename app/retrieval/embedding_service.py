@@ -27,9 +27,9 @@ class EmbeddingService:
         self,
         model_name: str = BGE_MODEL_NAME,
     ):
-        self.provider = settings.llm_provider.lower().strip()
+        self.provider = settings.embedding_provider.lower().strip()
 
-        if self.provider == "ollama":
+        if self.provider == "bge":
             self.model = SentenceTransformer(model_name)
 
         elif self.provider == "gemini":
@@ -45,7 +45,7 @@ class EmbeddingService:
         else:
             raise ValueError(
                 f"Unsupported embedding provider: {settings.llm_provider}. "
-                "Use 'ollama' or 'gemini'."
+                "Use 'bge' or 'gemini'."
             )
 
     def embed_documents(
@@ -59,7 +59,7 @@ class EmbeddingService:
         if not texts:
             return []
 
-        if self.provider == "ollama":
+        if self.provider == "bge":
             embeddings = self.model.encode(
                 texts,
                 normalize_embeddings=True,
@@ -117,7 +117,7 @@ class EmbeddingService:
         Embed a user query for vector retrieval.
         """
 
-        if self.provider == "ollama":
+        if self.provider == "bge":
             embedding = self.model.encode(
                 query,
                 normalize_embeddings=True,

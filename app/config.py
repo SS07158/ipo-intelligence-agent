@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     ollama_model: str = "qwen3:8b"
 
     llm_provider: str = "ollama"
+    embedding_provider: str = "bge"
+    query_expansion_enabled: bool = False
 
     gemini_model: str = "gemini-2.5-flash-lite"
     gemini_api_key: str | None = None

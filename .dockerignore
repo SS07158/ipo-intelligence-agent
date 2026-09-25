@@ -11,8 +11,11 @@ __pycache__/
 
 .env
 
-data/
-ipo_intelligence.db
+data/*
+!data/chroma/
+!data/chroma/**
+
+!ipo_intelligence.db
 
 tests/
 evaluation/

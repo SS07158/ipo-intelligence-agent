@@ -101,17 +101,39 @@ def get_or_create_ipo(
 
     if existing is not None:
         existing.company_name = company_name
-        existing.symbol = symbol
-        existing.issue_size = issue_size
-        existing.price_band_low = price_band_low
-        existing.price_band_high = price_band_high
-        existing.lot_size = lot_size
-        existing.issue_open_date = issue_open_date
-        existing.issue_close_date = issue_close_date
-        existing.listing_date = listing_date
-        existing.fresh_issue = fresh_issue
-        existing.offer_for_sale = offer_for_sale
-        existing.offer_for_sale_shares = offer_for_sale_shares
+
+        if symbol is not None:
+            existing.symbol = symbol
+
+        if issue_size is not None:
+            existing.issue_size = issue_size
+
+        if price_band_low is not None:
+            existing.price_band_low = price_band_low
+
+        if price_band_high is not None:
+            existing.price_band_high = price_band_high
+
+        if lot_size is not None:
+            existing.lot_size = lot_size
+
+        if issue_open_date is not None:
+            existing.issue_open_date = issue_open_date
+
+        if issue_close_date is not None:
+            existing.issue_close_date = issue_close_date
+
+        if listing_date is not None:
+            existing.listing_date = listing_date
+
+        if fresh_issue is not None:
+            existing.fresh_issue = fresh_issue
+
+        if offer_for_sale is not None:
+            existing.offer_for_sale = offer_for_sale
+
+        if offer_for_sale_shares is not None:
+            existing.offer_for_sale_shares = offer_for_sale_shares
 
         session.commit()
         session.refresh(existing)

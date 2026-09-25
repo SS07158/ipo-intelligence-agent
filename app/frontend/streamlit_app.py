@@ -1,10 +1,32 @@
-
+import re
 import streamlit as st
 from pathlib import Path
 
 from app.frontend.agent_client import ask_agent
 
+def clean_answer_for_display(answer: str) -> str:
+    """Remove internal retrieval IDs from the user-facing answer."""
 
+    answer = re.sub(
+        r"\s*\(Evidence ID:\s*[^)]+\)",
+        "",
+        answer,
+    )
+
+    answer = re.sub(
+        r"\s*\[Evidence ID:\s*[^\]]+\]",
+        "",
+        answer,
+    )
+
+    answer = re.sub(
+        r"\s*\[[^\]\n]*-chunk-\d+\]",
+        "",
+        answer,
+        flags=re.IGNORECASE,
+    )
+
+    return answer.strip()
 # ============================================================
 # PAGE CONFIGURATION
 # ============================================================
@@ -390,7 +412,9 @@ if prompt:
                 st.session_state.selected_company,
             )
 
-            answer = response["answer"]
+            answer = clean_answer_for_display(
+                response["answer"]
+            )
 
             sources = response.get(
                 "sources",

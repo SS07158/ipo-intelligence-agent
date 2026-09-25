@@ -18,7 +18,7 @@ class VectorStore:
         collection_name = (
             collection_name or settings.chroma_collection_name
         )
-        
+
         self.client = chromadb.PersistentClient(
             path=str(persist_directory)
         )
@@ -68,6 +68,23 @@ class VectorStore:
         """
 
         return self.collection.count()
+
+    def existing_ids(
+        self,
+        ids: list[str],
+    ) -> set[str]:
+        """
+        Return the IDs that already exist in the collection.
+        """
+
+        if not ids:
+            return set()
+
+        result = self.collection.get(
+            ids=ids,
+        )
+
+        return set(result["ids"])
 
     def query(
         self,

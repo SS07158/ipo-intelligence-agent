@@ -2,6 +2,7 @@ from app.retrieval.embedding_service import EmbeddingService
 from app.retrieval.vector_store import VectorStore
 from app.retrieval.bm25_store import BM25Store
 from app.retrieval.query_expander import expand_query
+from app.config import settings
 
 
 class HybridRetriever:
@@ -272,7 +273,10 @@ class HybridRetriever:
 
         candidate_k = max(top_k * 4, 20)
 
-        expanded_query = expand_query(query)
+        if settings.query_expansion_enabled:
+            expanded_query = expand_query(query)
+        else:
+            expanded_query = query
 
         normalized_query = query.lower()
 
