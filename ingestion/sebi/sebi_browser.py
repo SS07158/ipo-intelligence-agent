@@ -1,4 +1,4 @@
-from urllib.parse import urljoin
+from urllib.parse import unquote, urljoin
 
 from playwright.sync_api import (
     sync_playwright,
@@ -370,19 +370,48 @@ class SEBIBrowserDiscovery:
                     timeout=30_000,
                 )
 
+                target = (
+                     document_type
+                     .strip()
+                     .upper()
+                )
+                
                 page.wait_for_timeout(
                     1_500
                 )
+
+                # SEBI sometimes embeds the actual offer document
+                # inside an iframe instead of exposing it as an <a href>.
+                iframes = page.locator("iframe")
+                
+                for index in range(iframes.count()):
+                    iframe = iframes.nth(index)
+                
+                    src = iframe.get_attribute("src")
+                
+                    if not src:
+                        continue
+                
+                    if "file=" not in src.lower():
+                        continue
+                
+                    document_url = src.split(
+                        "file=",
+                            1
+                    )[1]
+                
+                    if target in page.title().upper():
+                        return unquote(
+                            document_url
+                        )
 
                 links = page.locator(
                     "a"
                 )
 
-                target = (
-                    document_type
-                    .strip()
-                    .upper()
-                )
+                
+
+                
 
                 for index in range(
                     links.count()
@@ -410,9 +439,16 @@ class SEBIBrowserDiscovery:
                     if not href:
                         continue
 
-                    # Ignore the generic site links.
-                    if "SEBI_DATA" not in href.upper():
-                        continue
+                    print(
+                        "SEBI LINK:",
+                        repr(text),
+                        "=>",
+                        repr(href),
+                    )
+
+                    # # Ignore the generic site links.
+                    # if "SEBI_DATA" not in href.upper():
+                    #     continue
 
                     # We need the actual requested document,
                     # not merely any PDF on the page.

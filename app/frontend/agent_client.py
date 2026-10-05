@@ -4,13 +4,13 @@ import os
 
 API_URL = os.getenv(
     "API_URL",
-    "http://127.0.0.1:8000",
+    "http://localhost:8080",
 )
 
 
 def ask_agent(
     question: str,
-    company_name: str | None = None,
+    ipo_id: str,
 ) -> str:
     # payload = {
     #     "question": question,
@@ -30,7 +30,7 @@ def ask_agent(
 
     payload = {
         "question": question,
-        "company_name": company_name,
+        "ipo_id": ipo_id
     }
 
     response = requests.post(

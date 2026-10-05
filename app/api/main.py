@@ -1,12 +1,20 @@
-from fastapi import FastAPI
-
+from fastapi import FastAPI, HTTPException, Header, Depends
+import secrets
 from functools import lru_cache
 import re
 
+from app.config import settings
 from app.agents.langgraph_agent import LangGraphIPOAgent
-from app.api.schemas import ChatRequest, ChatResponse
+from app.api.schemas import ChatRequest, ChatResponse, AdminIPORequest, AdminIPOResponse, IPOListItem
 
 from app.retrieval.vector_store import VectorStore
+
+from ingestion.document_resolver import DocumentResolver
+from ingestion.ipo_ingestion_service import IPOIngestionService
+from ingestion.sebi.sebi_browser import SEBIBrowserDiscovery
+
+from database.database import SessionLocal
+from database.ipo_repository import get_all_ipos, get_ipo_by_id
 
 app = FastAPI(
     title="Indian IPO Intelligence API",
@@ -25,6 +33,20 @@ def health_check():
 @lru_cache
 def get_agent() -> LangGraphIPOAgent:
     return LangGraphIPOAgent()
+
+@lru_cache
+def get_ipo_ingestion_service() -> IPOIngestionService:
+    sebi_source = SEBIBrowserDiscovery(
+        headless=True
+    )
+
+    resolver = DocumentResolver(
+        sebi_source=sebi_source
+    )
+
+    return IPOIngestionService(
+        resolver=resolver
+    )
 
 def _extract_sources(result: dict) -> list[dict]:
     sources = []
@@ -138,12 +160,53 @@ def _extract_sources(result: dict) -> list[dict]:
     return sources
 
 
+
+
 @app.post(
     "/api/chat",
     response_model=ChatResponse,
 )
 def chat(request: ChatRequest):
     question = request.question.strip()
+
+    # ------------------------------------------------------------
+    # Resolve IPO context
+    # ------------------------------------------------------------
+
+    company_name = request.company_name
+
+    if request.ipo_id:
+
+        session = SessionLocal()
+
+        try:
+            ipo = get_ipo_by_id(
+                session,
+                request.ipo_id,
+            )
+
+        finally:
+            session.close()
+
+        if ipo is None:
+            raise HTTPException(
+                status_code=404,
+                detail=(
+                    f"IPO not found: {request.ipo_id}"
+                ),
+            )
+
+        company_name = ipo.company_name
+
+
+    if not company_name:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Either ipo_id or company_name "
+                "must be provided."
+            ),
+        )
 
     if request.company_name:
         company = request.company_name.strip()
@@ -157,6 +220,8 @@ def chat(request: ChatRequest):
                 f"Regarding {company}: "
                 f"{question}"
             )
+
+    
 
     result = get_agent().run(question)
 
@@ -172,4 +237,105 @@ def chat(request: ChatRequest):
     return ChatResponse(
         answer=answer,
         sources=sources,
+    )
+
+def verify_admin_key(
+    x_admin_key: str | None = Header(
+        default=None,
+        alias="X-Admin-Key",
+    ),
+):
+    if not settings.admin_api_key:
+        raise HTTPException(
+            status_code=503,
+            detail="Admin API key is not configured.",
+        )
+
+    if (
+        x_admin_key is None
+        or not secrets.compare_digest(
+            x_admin_key,
+            settings.admin_api_key,
+        )
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or missing admin API key.",
+        )
+
+@app.get(
+    "/api/ipos",
+    response_model=list[IPOListItem],
+)
+def list_ipos():
+    session = SessionLocal()
+
+    try:
+        ipos = get_all_ipos(session)
+
+        return [
+            IPOListItem(
+                ipo_id=ipo.ipo_id,
+                company_name=ipo.company_name,
+            )
+            for ipo in ipos
+        ]
+
+    finally:
+        session.close()
+    
+@app.post(
+    "/admin/ipos",
+    response_model=AdminIPOResponse,
+)
+def add_ipo(
+    request: AdminIPORequest,
+    _: None = Depends(verify_admin_key)
+):
+    ingestion_service = (
+        get_ipo_ingestion_service()
+    )
+
+    try:
+        result = ingestion_service.add_ipo(
+            ipo_id=request.ipo_id,
+            company_name=request.company_name,
+            document_id=request.document_id,
+            document_type=request.document_type,
+            version=request.version,
+            published_at=request.published_at,
+        )
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        )
+
+    if not result.get("success"):
+        raise HTTPException(
+            status_code=404,
+            detail=result.get(
+                "message",
+                "IPO ingestion failed.",
+            ),
+        )
+
+    return AdminIPOResponse(
+        success=True,
+        ipo_id=result.get("ipo_id"),
+        document_id=result.get("document_id"),
+        company_name=result.get(
+            "company_name",
+            request.company_name,
+        ),
+        document_type=result.get(
+            "document_type",
+            request.document_type,
+        ),
+        message="IPO added and indexed successfully.",
+        source=result.get("source"),
+        indexed_chunks=result.get(
+            "indexed_chunks"
+        ),
     )

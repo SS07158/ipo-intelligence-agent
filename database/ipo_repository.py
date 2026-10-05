@@ -73,6 +73,22 @@ def get_ipo_by_id(
 
     return session.scalar(statement)
 
+def get_all_ipos(
+    session: Session,
+) -> list[IPO]:
+    """
+    Retrieve all IPOs ordered by company name.
+    """
+
+    statement = (
+        select(IPO)
+        .order_by(IPO.company_name)
+    )
+
+    return list(
+        session.scalars(statement).all()
+    )
+
 def get_or_create_ipo(
     session: Session,
     *,

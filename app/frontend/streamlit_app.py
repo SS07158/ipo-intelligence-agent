@@ -1,4 +1,6 @@
 import re
+import os
+import requests
 import streamlit as st
 from pathlib import Path
 
@@ -51,13 +53,76 @@ if css_path.exists():
         unsafe_allow_html=True,
     )
 
+# ============================================================
+# IPO CATALOG
+# ============================================================
+
+API_URL = os.getenv(
+    "API_URL",
+    "http://localhost:8080",
+)
+
+
+def get_ipo_catalog() -> list[dict]:
+    """
+    Retrieve the available IPOs from the backend.
+    """
+
+    response = requests.get(
+        f"{API_URL}/api/ipos",
+        timeout=10,
+    )
+
+    response.raise_for_status()
+
+    return response.json()
+
+# ============================================================
+# LOAD IPO CATALOG
+# ============================================================
+
+try:
+
+    ipo_catalog = get_ipo_catalog()
+
+except requests.RequestException as exc:
+
+    st.error(
+        "Could not load the IPO catalog "
+        "from the backend."
+    )
+
+    st.code(str(exc))
+
+    st.stop()
+
+
+ipo_options = [
+    ipo["company_name"]
+    for ipo in ipo_catalog
+]
+
+
+if not ipo_options:
+
+    st.error(
+        "No IPOs are currently available."
+    )
+
+    st.stop()
 
 # ============================================================
 # SESSION STATE
 # ============================================================
 
 if "selected_company" not in st.session_state:
-    st.session_state.selected_company = "CULT.FIT LIMITED"
+    st.session_state.selected_company = ipo_options[0]
+
+elif (
+    st.session_state.selected_company
+    not in ipo_options
+):
+    st.session_state.selected_company = ipo_options[0]
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -92,13 +157,13 @@ with st.sidebar:
     st.markdown("### Company")
 
     company = st.selectbox(
-        "Select IPO",
-        [
-            "CULT.FIT LIMITED",
-            "Sterlite Electric Limited",
-        ],
-        label_visibility="collapsed",
-    )
+    "Select IPO",
+    ipo_options,
+    index=ipo_options.index(
+        st.session_state.selected_company
+    ),
+    label_visibility="collapsed",
+)
 
     st.session_state.selected_company = company
 

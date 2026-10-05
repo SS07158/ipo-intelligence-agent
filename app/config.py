@@ -33,6 +33,8 @@ class Settings(BaseSettings):
 
     alpha_vantage_api_key: str | None = None
 
+    admin_api_key: str = ""
+
 
 settings = Settings()
 

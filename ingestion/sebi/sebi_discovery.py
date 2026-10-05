@@ -197,4 +197,32 @@ def discover_documents(
         company_name,
     )
 
+class SEBIDocumentDiscovery:
+    """
+    Adapter exposing the interface expected by
+    DocumentResolver.
+    """
+
+    def discover(
+        self,
+        company_name: str,
+    ) -> list[DiscoveredSEBIDocument]:
+        return discover_documents(
+            company_name
+        )
+
+    def extract_document_url(
+        self,
+        detail_url: str,
+        document_type: str,
+    ) -> str | None:
+        """
+        Resolve the actual document URL from a
+        SEBI filing detail page.
+
+        This is intentionally kept separate from
+        the listing discovery logic.
+        """
+
+        return None
     
