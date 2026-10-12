@@ -97,39 +97,58 @@ except requests.RequestException as exc:
     st.stop()
 
 
-ipo_options = [
-    ipo["company_name"]
+
+# ============================================================
+# IPO CATALOG AND UNIQUE IDENTIFIERS
+# ============================================================
+
+ipo_by_id = {
+    ipo["ipo_id"]: ipo
     for ipo in ipo_catalog
-]
+}
 
+if not ipo_by_id:
+    st.error("No IPOs are currently available.")
+    st.stop()
 
-if not ipo_options:
+# Count occurrences of each company name so duplicate names
+# can be distinguished in the dropdown.
+company_name_counts = {}
 
-    st.error(
-        "No IPOs are currently available."
+for ipo in ipo_catalog:
+    name = ipo["company_name"]
+    company_name_counts[name] = (
+        company_name_counts.get(name, 0) + 1
     )
 
-    st.stop()
+# Display the IPO ID only when company names are duplicated.
+ipo_labels = {
+    ipo_id: (
+        f"{ipo['company_name']} ({ipo_id})"
+        if company_name_counts[ipo["company_name"]] > 1
+        else ipo["company_name"]
+    )
+    for ipo_id, ipo in ipo_by_id.items()
+}
+
+ipo_options = list(ipo_by_id.keys())
 
 # ============================================================
 # SESSION STATE
 # ============================================================
 
-if "selected_company" not in st.session_state:
-    st.session_state.selected_company = ipo_options[0]
-
-elif (
-    st.session_state.selected_company
-    not in ipo_options
+if (
+    "selected_ipo_id" not in st.session_state
+    or st.session_state.selected_ipo_id not in ipo_by_id
 ):
-    st.session_state.selected_company = ipo_options[0]
+    st.session_state.selected_ipo_id = ipo_options[0]
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
 
 # ============================================================
-# SIDEBAR
+# SIDEBAR — COMPANY SELECTION
 # ============================================================
 
 with st.sidebar:
@@ -156,16 +175,22 @@ with st.sidebar:
 
     st.markdown("### Company")
 
-    company = st.selectbox(
-    "Select IPO",
-    ipo_options,
-    index=ipo_options.index(
-        st.session_state.selected_company
-    ),
-    label_visibility="collapsed",
-)
+    selected_ipo_id = st.selectbox(
+        "Select IPO",
+        options=ipo_options,
+        format_func=lambda ipo_id: ipo_labels[ipo_id],
+        index=ipo_options.index(
+            st.session_state.selected_ipo_id
+        ),
+        key="selected_ipo_id",
+        label_visibility="collapsed",
+    )
 
-    st.session_state.selected_company = company
+    # Preserve the company name for headings and quick prompts.
+    st.session_state.selected_company = (
+        ipo_by_id[selected_ipo_id]["company_name"]
+    )
+
 
     # --------------------------------------------------------
     # Quick Research
@@ -472,9 +497,24 @@ if prompt:
 
         try:
 
+            # selected_ipo = next(
+            #     (
+            #         ipo
+            #         for ipo in ipo_catalog
+            #         if ipo["company_name"]
+            #         == st.session_state.selected_company
+            #     ),
+            #     None,
+            # )
+
+            # if selected_ipo is None:
+            #     raise ValueError(
+            #         "Selected IPO was not found in the current catalog."
+            #     )
+
             response = ask_agent(
                 prompt,
-                st.session_state.selected_company,
+                st.session_state.selected_ipo_id,
             )
 
             answer = clean_answer_for_display(
