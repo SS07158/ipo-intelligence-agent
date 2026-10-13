@@ -1,3 +1,4 @@
+import time
 from langchain_ollama import ChatOllama
 from langchain_core.messages import AIMessage
 from langgraph.graph import (
@@ -36,8 +37,10 @@ class LangGraphIPOAgent:
         self,
         model: str | None = None,
         default_company: str = "CULT.FIT LIMITED",
+        default_ipo_id: str | None = None,
     ):
         self.default_company = default_company
+        self.default_ipo_id = default_ipo_id
 
 
         self.llm = ChatOllama(
@@ -133,26 +136,54 @@ class LangGraphIPOAgent:
                     f"{tool_call['name']}"
                 )
 
+
+            tool_args = dict(tool_call.get("args") or {})
+
+            # Enforce the IPO selected in the chat UI.
+            # Never trust a model-generated IPO ID for document search.
+            if tool_call["name"] == "search_ipo_documents_tool":
+                if self.default_ipo_id is not None:
+                    tool_args["ipo_id"] = self.default_ipo_id
+                else:
+                    # Without an explicit selected ID, let the
+                    # retrieval function resolve a unique company
+                    # name or reject an ambiguous/unscoped search.
+                    tool_args.pop("ipo_id", None)
+
+            tool_started = time.perf_counter()
+
+            print(
+                f"[TOOL PERF] Starting: {tool_call['name']}",
+                flush=True,
+            )
+
             try:
-                result = tool.invoke(
-                    tool_call["args"]
+                result = tool.invoke(tool_args)
+
+                print(
+                    f"[TOOL PERF] Completed: {tool_call['name']} "
+                    f"in {time.perf_counter() - tool_started:.2f}s",
+                    flush=True,
                 )
 
             except Exception as exc:
+                print(
+                    f"[TOOL PERF] Failed: {tool_call['name']} "
+                    f"after {time.perf_counter() - tool_started:.2f}s: {exc}",
+                    flush=True,
+                )
+
                 result = {
                     "found": False,
                     "error": True,
                     "tool": tool_call["name"],
-                    "message": (
-                        "Tool execution failed: "
-                        f"{str(exc)}"
-                    ),
+                    "message": f"Tool execution failed: {str(exc)}",
                 }
 
             results.append(
                 {
                     "tool": tool_call["name"],
-                    "args": tool_call["args"],
+                    "args": tool_args,
                     "result": result,
                 }
             )

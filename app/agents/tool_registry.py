@@ -62,6 +62,7 @@ def search_ipo_documents_tool(
     top_k: int = 5,
     section: str | None = None,
     company_name: str | None = None,
+    ipo_id: str | None = None,
 ) -> dict:
     """
     Search the IPO documents and return
@@ -73,6 +74,7 @@ def search_ipo_documents_tool(
         top_k=top_k,
         section=section,
         company_name=company_name,
+        ipo_id=ipo_id,
     )
 
 @tool

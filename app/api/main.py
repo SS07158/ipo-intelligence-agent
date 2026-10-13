@@ -4,7 +4,7 @@ from functools import lru_cache
 from threading import Lock
 from uuid import uuid4
 import re
-
+import time
 from app.config import settings
 from app.agents.langgraph_agent import LangGraphIPOAgent
 from app.api.schemas import ChatRequest, ChatResponse, AdminIPORequest, AdminIPOResponse, IPOListItem
@@ -286,22 +286,48 @@ def chat(request: ChatRequest):
             ),
         )
 
-    if request.company_name:
-        company = request.company_name.strip()
+    selected_company = company_name.strip()
 
-        if (
-            company
-            and company.lower()
-            not in question.lower()
-        ):
-            question = (
-                f"Regarding {company}: "
-                f"{question}"
-            )
+    if (
+        selected_company
+        and selected_company.lower() not in question.lower()
+    ):
+        question = (
+            f"Regarding {selected_company}: "
+            f"{question}"
+        )
 
-    
+    chat_started = time.perf_counter()
 
-    result = get_agent().run(question)
+    print(
+        f"[CHAT PERF] Started for IPO: {request.ipo_id}"
+    )
+
+    agent_started = time.perf_counter()
+
+    agent = LangGraphIPOAgent(
+        default_company=company_name,
+        default_ipo_id=request.ipo_id,
+    )
+
+    print(
+        "[CHAT PERF] Agent initialization: "
+        f"{time.perf_counter() - agent_started:.2f}s"
+    )
+
+    run_started = time.perf_counter()
+
+    result = agent.run(question)
+
+    print(
+        "[CHAT PERF] Agent execution: "
+        f"{time.perf_counter() - run_started:.2f}s"
+    )
+
+    print(
+        "[CHAT PERF] Total elapsed: "
+        f"{time.perf_counter() - chat_started:.2f}s"
+    )
 
     answer = result.get(
         "answer",

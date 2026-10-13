@@ -5,7 +5,7 @@ services:
     container_name: ipo-intelligence-api
 
     ports:
-      - "8000:8000"
+      - "8000:8080"
 
     env_file:
       - .env
@@ -29,7 +29,7 @@ services:
       - "8501:8501"
 
     environment:
-      API_URL: http://api:8000
+      API_URL: http://api:8080
       PYTHONPATH: /app
 
     depends_on:

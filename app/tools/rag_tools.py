@@ -11,69 +11,85 @@ def get_rag_service() -> RAGService:
 
     return RAG_SERVICE
 
+
 def search_ipo_documents(
     question: str,
     top_k: int = 5,
     section: str | None = None,
     company_name: str | None = None,
+    ipo_id: str | None = None,
 ) -> dict:
     """
-    Search IPO documents and generate a grounded answer.
+    Search IPO documents using a mandatory, validated IPO scope.
+    Refuses to perform an unfiltered document search.
     """
-
-
-    where = None
-
-    normalized_section = normalize_section(
-        section
+    from app.tools.ipo_tool import normalize_company_name
+    from database.database import SessionLocal
+    from database.ipo_repository import (
+        get_all_ipos,
+        get_ipo_by_id,
     )
 
+    normalized_section = normalize_section(section)
     where_values = {}
 
     if normalized_section is not None:
-        where_values["section"] = (
-            normalized_section
-        )
+        where_values["section"] = normalized_section
 
-    if company_name is not None:
-        from database.database import SessionLocal
-        from database.ipo_repository import (
-            get_ipo_by_company,
-        )
-        from app.tools.ipo_tool import (
-            normalize_company_name,
-        )
+    session = SessionLocal()
 
-        session = SessionLocal()
+    try:
+        selected_ipo = None
 
-        try:
-            canonical_company = (
-                normalize_company_name(
-                    company_name
-                )
-            )
+        # The selected ID takes precedence over company-name matching.
+        if ipo_id is not None:
+            selected_ipo = get_ipo_by_id(session, ipo_id)
 
-            ipo = get_ipo_by_company(
-                session,
-                canonical_company,
-            )
-
-            if ipo is not None:
-                where_values["ipo_id"] = (
-                    ipo.ipo_id
+            if selected_ipo is None:
+                raise ValueError(
+                    f"IPO scope '{ipo_id}' was not found. "
+                    "Document search was blocked."
                 )
 
-        finally:
-            session.close()
+        elif company_name is not None:
+            canonical_company = normalize_company_name(
+                company_name
+            )
 
-    if where_values:
-        where = where_values
+            matches = [
+                ipo
+                for ipo in get_all_ipos(session)
+                if normalize_company_name(
+                    ipo.company_name or ""
+                ) == canonical_company
+            ]
+
+            if len(matches) != 1:
+                raise ValueError(
+                    "Could not uniquely resolve the IPO from "
+                    "the company name. Provide a valid ipo_id. "
+                    "Document search was blocked."
+                )
+
+            selected_ipo = matches[0]
+
+        else:
+            raise ValueError(
+                "Document search requires a valid ipo_id. "
+                "Unfiltered document search is not permitted."
+            )
+
+        where_values["ipo_id"] = selected_ipo.ipo_id
+
+    finally:
+        session.close()
 
     return get_rag_service().answer(
         question,
         top_k=top_k,
-        where=where,
+        where=where_values,
     )
+
 
 def normalize_section(
     section: str | None,
