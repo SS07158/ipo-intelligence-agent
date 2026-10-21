@@ -1,6 +1,8 @@
 from hashlib import sha256
 from pathlib import Path
+import time
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 
 from ingestion.archive import (
     extract_document_from_zip,
@@ -17,15 +19,14 @@ class DocumentDownloadError(Exception):
 def _download_bytes(
     url: str,
     timeout: int = 60,
+    max_attempts: int = 3,
 ) -> tuple[bytes, str]:
     """
-    Download raw bytes without assuming the file type.
+    Download raw bytes with retries for transient failures.
     """
 
     if not url.strip():
-        raise ValueError(
-            "URL cannot be empty."
-        )
+        raise ValueError("URL cannot be empty.")
 
     request = Request(
         url,
@@ -40,49 +41,64 @@ def _download_bytes(
         },
     )
 
-    try:
-        with urlopen(
-            request,
-            timeout=timeout,
-        ) as response:
+    last_error = None
 
-            status = response.status
+    for attempt in range(1, max_attempts + 1):
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                status = response.status
 
-            if status != 200:
+                if status != 200:
+                    raise DocumentDownloadError(
+                        f"HTTP status {status}"
+                    )
+
+                content = response.read()
+
+                content_type = response.headers.get(
+                    "Content-Type", ""
+                )
+
+            if not content:
                 raise DocumentDownloadError(
-                    f"HTTP status {status}"
+                    "Downloaded document is empty."
                 )
 
-            content = response.read()
+            return content, content_type
 
-            content_type = (
-                response.headers.get(
-                    "Content-Type",
-                    "",
-                )
-            )
-
-    except Exception as exc:
-
-        if isinstance(
-            exc,
-            DocumentDownloadError,
-        ):
+        except DocumentDownloadError:
             raise
 
-        raise DocumentDownloadError(
-            f"Download failed: {exc}"
-        ) from exc
+        except HTTPError as exc:
+            # Retry rate limits, timeouts, and server-side failures.
+            retryable = (
+                exc.code in (408, 425, 429)
+                or 500 <= exc.code <= 599
+            )
 
-    if not content:
-        raise DocumentDownloadError(
-            "Downloaded document is empty."
-        )
+            if not retryable:
+                raise DocumentDownloadError(
+                    f"Download failed: HTTP {exc.code}"
+                ) from exc
 
-    return (
-        content,
-        content_type,
-    )
+            last_error = exc
+
+        except Exception as exc:
+            # Includes interrupted reads such as IncompleteRead.
+            last_error = exc
+
+        if attempt < max_attempts:
+            delay = 2 ** (attempt - 1)
+            print(
+                f"Document download attempt {attempt} failed: "
+                f"{last_error}. Retrying in {delay}s."
+            )
+            time.sleep(delay)
+
+    raise DocumentDownloadError(
+        f"Download failed after {max_attempts} attempts: "
+        f"{last_error}"
+    ) from last_error
 
 
 def _write_bytes(
