@@ -20,6 +20,8 @@ COPY ipo_intelligence.db ./ipo_intelligence.db
 # Download BGE-M3 during image build so Cloud Run does not
 # need to download the model during every cold start.
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('BAAI/bge-m3')"
+# Install Chromium headless shell and its system dependencies for Playwright
+RUN python -m playwright install --with-deps --only-shell chromium
 
 EXPOSE 8080
 
